@@ -94,3 +94,43 @@ void workFunction_9(char *s) {
   if(!(buf1 = (char *) realloc(buf,intSize*4)))
   free(buf); // GOOD
 }
+void workFunction_10(char *s) {
+  int intSize = 10;
+  while(1) {
+    char *buf = (char *) malloc(intSize);
+    free(buf); // GOOD
+    if(buf) free(buf); // BAD
+  }
+}
+void workFunction_11(char *s) {
+  int intSize = 10;
+  while(1) {
+    char *buf = (char *) malloc(intSize);
+    if(buf) free(buf); // GOOD
+    free(buf); // BAD
+  }
+}
+void workFunction_12(char *s) {
+  int intSize = 10;
+  int i = 0;
+  while(1) {
+    i++;
+    char *buf = (char *) malloc(intSize);
+    if(i % 2 == 0) free(buf); // GOOD
+    if(i % 2 == 1) free(buf); // GOOD
+  }
+}
+void workFunction_13(char *s) {
+  int intSize = 10;
+  char *buf = (char *) malloc(intSize);
+  while(1) {
+    free(buf); // BAD
+  }
+}
+void workFunction_14(char *s) {
+  int intSize = 10;
+  while(1) {
+    char *buf = (char *) malloc(intSize);
+    free(buf); // GOOD
+  }
+}
